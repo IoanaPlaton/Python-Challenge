@@ -1,150 +1,99 @@
-{
- "cells": [
-  {
-   "cell_type": "code",
-   "execution_count": 7,
-   "id": "8548bdd4-d47b-4f45-802d-2227bdb84243",
-   "metadata": {
-    "scrolled": true
-   },
-   "outputs": [
-    {
-     "name": "stdout",
-     "output_type": "stream",
-     "text": [
-      "Financial Analysis\n",
-      "_____________________________\n",
-      "Total Months: 86\n",
-      "Total: $22564198\n",
-      "Average Change: $-8311.105882352942\n",
-      "Greatest Increase in Profits: Aug-16 ($1862002)\n",
-      "Greatest Decrease in Profits: Feb-14 ($-1825558)\n"
-     ]
-    }
-   ],
-   "source": [
-    "#PyBank Instructions\n",
-    "\n",
-    "#Your task is to create a Python script that analyzes the records to calculate each of the following values:\n",
-    "#The total number of months included in the dataset\n",
-    "#The net total amount of “Profit/Losses” over the entire period\n",
-    "#The changes in “Profit/Losses” over the entire period, and then the average of those changes\n",
-    "#The greatest increase in profits (date and amount) over the entire period\n",
-    "#The greatest decrease in profits (date and amount) over the entire period\n",
-    "\n",
-    "import os\n",
-    "import csv\n",
-    "\n",
-    "budget_data = os.path.join ('.' , 'Resources' , 'budget_data.csv')\n",
-    "\n",
-    "#open and read csv (plain reading) \n",
-    "#with open (budget_data, 'r') as file_handler:\n",
-    "    #lines = file_handler.read()\n",
-    "    #print(lines)\n",
-    "    #print(type(lines))\n",
-    "\n",
-    "# Lists to store data\n",
-    "dates = []\n",
-    "profit_loss = []\n",
-    "change = []\n",
-    "    \n",
-    "#open and read csv \n",
-    "with open (budget_data, encoding='utf') as csvfile:\n",
-    "    csv_reader = csv.reader(csvfile, delimiter=\",\")\n",
-    "    #print(csv_reader)\n",
-    "\n",
-    "# Read the header row first \n",
-    "    csv_header = next(csv_reader)\n",
-    "    #print(csv_header)\n",
-    "\n",
-    "    print(\"Financial Analysis\")\n",
-    "    print(\"_____________________________\")\n",
-    "\n",
-    "# Read each row of data after the header\n",
-    "    for row in csv_reader:\n",
-    "        #print(row)\n",
-    "        \n",
-    "        #Add dates\n",
-    "        dates.append(row[0])\n",
-    "        \n",
-    "        #Add Profit/Losses\n",
-    "        profit_loss.append(int(row[1]))\n",
-    "\n",
-    "#The total number of months included in the dataset\n",
-    "    total_months = len(dates)       \n",
-    "    print(\"Total Months: \" + str(total_months))\n",
-    "    \n",
-    "#The net total amount of “Profit/Losses” over the entire period\n",
-    "    net_total = str(sum(profit_loss))\n",
-    "    print(\"Total: \" + \"$\"+ (net_total))\n",
-    "\n",
-    "#The changes in “Profit/Losses” over the entire period, and then the average of those changes\n",
-    "    #add change\n",
-    "    for x in range(1, len(profit_loss)):\n",
-    "        change.append((int(profit_loss[x]) - int(profit_loss[x-1])))\n",
-    "        #print(change)\n",
-    "    average = sum(change) / len(change)\n",
-    "    print(\"Average Change: \" + \"$\"+str(average))\n",
-    "\n",
-    "#The greatest increase in profits (date and amount) over the entire period\n",
-    "    greatest_increase = max(change)\n",
-    "    #print(str(greatest_increase))\n",
-    "    print(\"Greatest Increase in Profits: \" + str(dates[change.index(max(change))+1]) + \" \" + \"(\" +\"$\"+str(greatest_increase)+\")\")   \n",
-    "    \n",
-    "#The greatest decrease in profits (date and amount) over the entire period\n",
-    "    greatest_decrease = min(change)\n",
-    "    #print(str(greatest_decrease))\n",
-    "    print(\"Greatest Decrease in Profits: \" + str(dates[change.index(min(change))+1]) + \" \" + \"(\" +\"$\"+str(greatest_decrease)+\")\")        \n",
-    "\n",
-    "#In addition, your final script should both print the analysis to the terminal and export a text file with the results.\n",
-    "\n",
-    "output_path = os.path.join('.', 'Analysis', 'FinancialAnalysis.txt')   \n",
-    "#print(output_path)\n",
-    "with open(output_path, \"w\") as txtfile:\n",
-    "    txtfile.write(\"Financial Analysis\" + \"\\n\")\n",
-    "    \n",
-    "    txtfile.write(\"___________________\"+ \"\\n\")\n",
-    "\n",
-    "    txtfile.write(\"Total Months: \" + str(total_months) + \"\\n\")\n",
-    "    \n",
-    "    txtfile.write(\"Total: \" + \"$\"+ (net_total) + \"\\n\")\n",
-    "    \n",
-    "    txtfile.write(\"Average Change: \" + \"$\"+str(average) + \"\\n\")\n",
-    "    \n",
-    "    txtfile.write(\"Greatest Increase in Profits: \" + str(dates[change.index(max(change))+1]) + \" \" + \"(\" +\"$\"+str(greatest_increase)+\")\" \n",
-    "                  + \"\\n\")\n",
-    "    \n",
-    "    txtfile.write(\"Greatest Decrease in Profits: \" + str(dates[change.index(min(change))+1]) + \" \" + \"(\" +\"$\"+str(greatest_decrease)+\")\" + \"\\n\")"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "id": "5d585dc9-0109-4d66-aac6-1225d73c7f59",
-   "metadata": {},
-   "outputs": [],
-   "source": []
-  }
- ],
- "metadata": {
-  "kernelspec": {
-   "display_name": "Python 3 (ipykernel)",
-   "language": "python",
-   "name": "python3"
-  },
-  "language_info": {
-   "codemirror_mode": {
-    "name": "ipython",
-    "version": 3
-   },
-   "file_extension": ".py",
-   "mimetype": "text/x-python",
-   "name": "python",
-   "nbconvert_exporter": "python",
-   "pygments_lexer": "ipython3",
-   "version": "3.11.7"
-  }
- },
- "nbformat": 4,
- "nbformat_minor": 5
-}
+#!/usr/bin/env python
+# coding: utf-8
+
+# In[1]:
+
+
+#PyBank Instructions
+
+#Your task is to create a Python script that analyzes the records to calculate each of the following values:
+#The total number of months included in the dataset
+#The net total amount of “Profit/Losses” over the entire period
+#The changes in “Profit/Losses” over the entire period, and then the average of those changes
+#The greatest increase in profits (date and amount) over the entire period
+#The greatest decrease in profits (date and amount) over the entire period
+
+import os
+import csv
+
+budget_data = os.path.join ('.' , 'Resources' , 'budget_data.csv')
+
+# Lists to store data
+dates = []
+profit_loss = []
+change = []
+    
+#open and read csv 
+with open (budget_data, encoding='utf') as csvfile:
+    csv_reader = csv.reader(csvfile, delimiter=",")
+    #print(csv_reader)
+
+# Read the header row first 
+    csv_header = next(csv_reader)
+    #print(csv_header)
+
+    print("Financial Analysis")
+    print("_____________________________")
+
+# Read each row of data after the header
+    for row in csv_reader:
+        #print(row)
+        
+        #Add dates
+        dates.append(row[0])
+        
+        #Add Profit/Losses
+        profit_loss.append(int(row[1]))
+
+#The total number of months included in the dataset
+    total_months = len(dates)       
+    print("Total Months: " + str(total_months))
+    
+#The net total amount of “Profit/Losses” over the entire period
+    net_total = str(sum(profit_loss))
+    print("Total: " + "$"+ (net_total))
+
+#The changes in “Profit/Losses” over the entire period, and then the average of those changes
+    #add change
+    for x in range(1, len(profit_loss)):
+        change.append((int(profit_loss[x]) - int(profit_loss[x-1])))
+        #print(change)
+    average = sum(change) / len(change)
+    print("Average Change: " + "$"+str(average))
+
+#The greatest increase in profits (date and amount) over the entire period
+    greatest_increase = max(change)
+    #print(str(greatest_increase))
+    print("Greatest Increase in Profits: " + str(dates[change.index(max(change))+1]) + " " + "(" +"$"+str(greatest_increase)+")")   
+    
+#The greatest decrease in profits (date and amount) over the entire period
+    greatest_decrease = min(change)
+    #print(str(greatest_decrease))
+    print("Greatest Decrease in Profits: " + str(dates[change.index(min(change))+1]) + " " + "(" +"$"+str(greatest_decrease)+")")        
+
+#In addition, your final script should both print the analysis to the terminal and export a text file with the results.
+
+output_path = os.path.join('.', 'Analysis', 'FinancialAnalysis.txt')   
+#print(output_path)
+with open(output_path, "w") as txtfile:
+    txtfile.write("Financial Analysis" + "\n")
+    
+    txtfile.write("___________________"+ "\n")
+
+    txtfile.write("Total Months: " + str(total_months) + "\n")
+    
+    txtfile.write("Total: " + "$"+ (net_total) + "\n")
+    
+    txtfile.write("Average Change: " + "$"+str(average) + "\n")
+    
+    txtfile.write("Greatest Increase in Profits: " + str(dates[change.index(max(change))+1]) + " " + "(" +"$"+str(greatest_increase)+")" 
+                  + "\n")
+    
+    txtfile.write("Greatest Decrease in Profits: " + str(dates[change.index(min(change))+1]) + " " + "(" +"$"+str(greatest_decrease)+")" + "\n")
+
+
+# In[ ]:
+
+
+
+
